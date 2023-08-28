@@ -139,7 +139,7 @@ func (k *keycloakAuth) exchangeAuthCode(req *http.Request, authCode string, stat
 	var state state
 	json.Unmarshal(stateBytes, &state)
 
-	resp, err := http.PostForm("https://"+k.config.KeycloakURL+"/realms/"+k.config.KeycloakRealm+"/protocol/openid-connect/token",
+	resp, err := http.PostForm("http://"+k.config.KeycloakURL+"/realms/"+k.config.KeycloakRealm+"/protocol/openid-connect/token",
 		url.Values{
 			"grant_type":    {"authorization_code"},
 			"client_id":     {k.config.ClientID},
