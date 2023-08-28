@@ -180,7 +180,7 @@ func (k *keycloakAuth) redirectToKeycloak(rw http.ResponseWriter, req *http.Requ
 	stateBase64 := base64.StdEncoding.EncodeToString(stateBytes)
 
 	redirectURL := url.URL{
-		Scheme: "https",
+		Scheme: "http",
 		Host:   k.config.KeycloakURL,
 		Path:   "/realms/" + k.config.KeycloakRealm + "/protocol/openid-connect/auth",
 		RawQuery: url.Values{
@@ -201,7 +201,7 @@ func (k *keycloakAuth) verifyToken(token string) (bool, error) {
 		"token": {token},
 	}
 
-	req, err := http.NewRequest(http.MethodPost, "https://"+k.config.KeycloakURL+"/realms/"+k.config.KeycloakRealm+"/protocol/openid-connect/token/introspect", strings.NewReader(data.Encode()))
+	req, err := http.NewRequest(http.MethodPost, "http://"+k.config.KeycloakURL+"/realms/"+k.config.KeycloakRealm+"/protocol/openid-connect/token/introspect", strings.NewReader(data.Encode()))
 	if err != nil {
 		return false, err
 	}
